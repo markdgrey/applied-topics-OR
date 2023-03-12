@@ -203,8 +203,11 @@ def run_simulated_annealing(
 
 
 SolverResult = collections.namedtuple(
-    "SolverResult", "objective solution objective_list"
+    "SolverResult", "objective solution", "objective_list"
 )
+
+
+
 
 
 def main():
@@ -232,6 +235,9 @@ def main():
 
     # Question 4
     # Run simulated annealing and plot the result...
+
+
+
 
 
 if __name__ == "__main__":
