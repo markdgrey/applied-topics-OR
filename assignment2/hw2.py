@@ -10,6 +10,8 @@ containing a permutation of 0, 1, ...., n - 1. For example, an array
 
 import collections
 import os
+import random
+
 
 #import matplotlib.pyplot as plt
 
@@ -32,7 +34,6 @@ def compute_total_cost(solution, distances):
     ... ], dtype=float)
     >>> compute_total_cost(solution, distances)
     19.0
-
 
     Parameters
     ----------
@@ -124,7 +125,32 @@ def sample_two_opt(solution):
         1D array of shape (n_cities,) with `int` dtype representing
         the sampled solution.
     """
-    # Question 3
+    current_solution = solution
+    current_solution_length = compute_total_cost(solution, distances)
+    n_cities = len(solution)
+
+    improve = True
+    while improve:
+        improve = False
+        for x in range(100):
+            n_cities = len(solution)
+            # Select two random indices i and j, with i < j
+            i = np.random.randint(n_cities-1)
+            j = np.random.randint(i+1, n_cities)
+
+            # Create a new solution by reversing the order of cities between i and j
+            new_solution = np.concatenate((solution[:i], solution[i:j+1][::-1], solution[j+1:]))
+            # Compute the length of the new tour
+            new_solution_length = compute_total_cost(new_solution, distances)
+            print(new_solution)
+            print(current_solution_length)
+            print(new_solution_length)
+            print("------------")
+            if (new_solution_length<current_solution_length):
+                improve = True
+                current_solution=new_solution
+                break
+    return current_solution
 
 
 def run_simulated_annealing(
